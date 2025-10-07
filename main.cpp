@@ -143,7 +143,9 @@ class Goat {
          * Initializes a goat with random age, color, and name
          */
         Goat() {
-
+            age = MIN_AGE + (rand() % (MAX_AGE - MIN_AGE + 1)); //Initialize with random age between MIN_AGE and MAX_AGE
+            name = names[rand() % NUM_NAMES];                   //Initialize name/color by retrieving a random element of their respective arrays
+            color = colors[rand() % NUM_COLORS];
         }
 
         /**
