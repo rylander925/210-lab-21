@@ -158,8 +158,8 @@ class Goat {
         static const int MAX_AGE = 20;
         static const string COLORS_FILENAME;
         static const string NAMES_FILENAME;
-        static string names[];
-        static string colors[];
+        static const string names[];
+        static string colors[NUM_COLORS];
         int age;
         string name;
         string color;
@@ -202,7 +202,7 @@ void ValidateFile(fstream *input, string filename);
 
 const string Goat::COLORS_FILENAME = "colors.txt";
 const string Goat::NAMES_FILENAME = "names.txt";
-string Goat::names = Goat::PopulateNames();
+const string Goat::names = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
 
 // Driver program
 int main() {
