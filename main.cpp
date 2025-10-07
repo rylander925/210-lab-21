@@ -1,4 +1,11 @@
+/*
+COMSC-210 | Lab 21 | Rylan Der
+IDE Used: Visual Studio Code
+*/
+
 #include <iostream>
+#include <string>
+#include <fstream>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -128,6 +135,49 @@ public:
         }
     }
 };
+
+class Goat {
+    public:
+        /**
+         * Initializes a goat with random age, color, and name
+         */
+        Goat() {
+
+        }
+
+        /**
+         * Initializes goat with given age, name, and color
+         */
+        Goat(int age, string name, string color): age(age), color(color), name(name) { };
+
+    private:
+        static const int NUM_COLORS = 15;
+        static const int NUM_NAMES = 15;
+        static const int MIN_AGE = 1;
+        static const int MAX_AGE = 20;
+        static const string COLORS_FILENAME;
+        static const string NAMES_FILENAME;
+        int age;
+        string name;
+        string color;
+        string names[NUM_NAMES];
+        string colors[NUM_COLORS];
+
+        /**
+         * Populate names array with random names from the names file
+         */
+        void PopulateNames() {
+
+        }
+
+        /**
+         * Populate colors array with random colors from the colors file
+         */
+        void PopulateColors() {}
+};
+
+const string Goat::COLORS_FILENAME = "colors.txt";
+const string Goat::NAMES_FILENAME = "names.txt";
 
 // Driver program
 int main() {
