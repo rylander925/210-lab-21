@@ -151,7 +151,23 @@ class Goat {
         /**
          * Initializes goat with given age, name, and color
          */
-        Goat(int age, string name, string color): age(age), color(color), name(name) { };
+        Goat(int age, string name, string color): age(age), color(color), name(name) { }
+
+        /**
+         * Output goat info formatted as [name] ([color], [age])
+         * @note Does not output newlines
+         */
+        void Print() const{
+            cout << name << " " << "(" << color << ", " << age << ")";
+        }
+
+        //Standard getters and setters
+        void setAge(int age)        { this->age = age; }
+        void setName(string name)   { this->name = name; }
+        void setColor(string color) { this->color = color; }
+        int getAge() const          { return age; }
+        string getName() const      { return name; }
+        string getColor() const     { return color; } 
 
     private:
         static const int NUM_COLORS = 15;
