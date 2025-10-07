@@ -6,6 +6,7 @@ IDE Used: Visual Studio Code
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <istream>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -157,27 +158,51 @@ class Goat {
         static const int MAX_AGE = 20;
         static const string COLORS_FILENAME;
         static const string NAMES_FILENAME;
+        static string names[];
+        static string colors[];
         int age;
         string name;
         string color;
-        string names[NUM_NAMES];
-        string colors[NUM_COLORS];
 
         /**
-         * Populate names array with random names from the names file
+         * Populate names array with names from the names file
          */
-        void PopulateNames() {
+        static string* PopulateNames() {
+            ifstream infile;
+            string* tempNames = new string[NUM_NAMES];
 
+            ValidateFile(&infile, NAMES_FILENAME);
+            for (int i = 0; i < NUM_NAMES; i++) {
+                getline(infile, tempNames[i]);
+            }
+            infile.close();
+
+            return tempNames;
         }
 
         /**
-         * Populate colors array with random colors from the colors file
+         * Populate colors array with colors from the colors file
          */
-        void PopulateColors() {}
+        static string* PopulateColors() {
+            ifstream infile;
+            string* tempColors = new string[NUM_COLORS];
+
+            ValidateFile(&infile, COLORS_FILENAME);
+            for (int i = 0; i < NUM_COLORS; i++) {
+                getline(infile, tempColors[i]);
+            }
+            infile.close();
+
+            return tempColors;
+        }
 };
+
+
+void ValidateFile(fstream *input, string filename);
 
 const string Goat::COLORS_FILENAME = "colors.txt";
 const string Goat::NAMES_FILENAME = "names.txt";
+string Goat::names = Goat::PopulateNames();
 
 // Driver program
 int main() {
@@ -198,4 +223,17 @@ int main() {
     list.print();
 
     return 0;
+}
+
+/**
+ * Attempts to open a file, and throws an error if open operation failed
+ * @param input File stream to open a file from
+ * @param filename Name of the file to open
+ */
+void ValidateFile(ifstream* input, string filename) {
+    input->open(filename);
+    if (!input->is_open()) {
+        cout << "ERROR: Could not open file \"" << filename << "\"" << endl;
+        throw ios_base::failure("Invalid file name");
+    }
 }
