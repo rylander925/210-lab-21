@@ -55,6 +55,9 @@ class Goat {
         string color;
 };
 
+const string Goat::names[NUM_NAMES] = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
+const string Goat::colors[NUM_COLORS] = {"Chestnut", "Mahogany", "Cinnamon", "Fawn", "Slate", "Ivory", "Onyx", "Copper", "Ash", "Ebony", "Silver", "Cream", "Tawny", "Umber", "Pearl"};
+
 class DoublyLinkedList {
 private:
     struct Node {
@@ -75,6 +78,10 @@ public:
     // constructor
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+    /**
+     * Appends a new node to end of linked list
+     * @param goat Goat to append
+     */
     void push_back(Goat goat) {
         Node* newNode = new Node(goat);
         if (!tail)  // if there's no tail, the list is empty
@@ -86,6 +93,10 @@ public:
         }
     }
 
+    /**
+     * Prepends a new node to front of linked list
+     * @param goat Goat to prepend
+     */
     void push_front(Goat goat) {
         Node* newNode = new Node(goat);
         if (!head)  // if there's no head, the list is empty
@@ -97,6 +108,11 @@ public:
         }
     }
 
+    /**
+     * Inserts a goat after a specified position in the linked list
+     * @param goat Goat to insert
+     * @param position Position to insert goat after; must be greater than 0
+     */
     void insert_after(Goat goat, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
@@ -128,6 +144,10 @@ public:
         temp->next = newNode;
     }
 
+    /**
+     * Deletes the first node with matching goat name from linked list
+     * @param goat Goat whose name should be deleted 
+     */
     void delete_node(Goat goat) {
         if (!head) return; // Empty list
 
@@ -152,6 +172,9 @@ public:
         delete temp;
     }
 
+    /**
+     * Outputs linked list data in order, calling Goat::Print() for each object
+     */
     void print() {
         Node* current = head;
         if (!current) { cout << "List is empty " << endl; return; }
@@ -165,6 +188,9 @@ public:
         }
     }
 
+    /**
+     * Outputs linked list data in reverse order, calling Goat::Print() for each object
+     */
     void print_reverse() {
         Node* current = tail;
         if (!current) { cout << "List is empty " << endl; return; }
@@ -178,6 +204,7 @@ public:
         }
     }
 
+    //Deletes linked list nodes
     ~DoublyLinkedList() {
         while (head) {
             Node* temp = head;
@@ -187,10 +214,6 @@ public:
     }
 };
 
-
-const string Goat::names[NUM_NAMES] = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
-const string Goat::colors[NUM_COLORS] = {"Chestnut", "Mahogany", "Cinnamon", "Fawn", "Slate", "Ivory", "Onyx", "Copper", "Ash", "Ebony", "Silver", "Cream", "Tawny", "Umber", "Pearl"};
-
 // Driver program
 int main() {
     //Seed random number for goat ages, names, and colors
@@ -199,11 +222,13 @@ int main() {
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
+    //Populate linked list with random goat information using Goat class default constructor
     for (int i = 0; i < size; ++i)
         list.push_back(Goat());
+
+    //Output list contents
     cout << "List forward: " << endl;
     list.print();
-
     cout << "List backward: " << endl;
     list.print_reverse();
 
