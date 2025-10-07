@@ -156,53 +156,18 @@ class Goat {
         static const int NUM_NAMES = 15;
         static const int MIN_AGE = 1;
         static const int MAX_AGE = 20;
-        static const string COLORS_FILENAME;
-        static const string NAMES_FILENAME;
-        static const string names[];
-        static string colors[NUM_COLORS];
+        static const string names[NUM_NAMES];
+        static const string colors[NUM_COLORS];
         int age;
         string name;
         string color;
-
-        /**
-         * Populate names array with names from the names file
-         */
-        static string* PopulateNames() {
-            ifstream infile;
-            string* tempNames = new string[NUM_NAMES];
-
-            ValidateFile(&infile, NAMES_FILENAME);
-            for (int i = 0; i < NUM_NAMES; i++) {
-                getline(infile, tempNames[i]);
-            }
-            infile.close();
-
-            return tempNames;
-        }
-
-        /**
-         * Populate colors array with colors from the colors file
-         */
-        static string* PopulateColors() {
-            ifstream infile;
-            string* tempColors = new string[NUM_COLORS];
-
-            ValidateFile(&infile, COLORS_FILENAME);
-            for (int i = 0; i < NUM_COLORS; i++) {
-                getline(infile, tempColors[i]);
-            }
-            infile.close();
-
-            return tempColors;
-        }
 };
 
 
 void ValidateFile(fstream *input, string filename);
 
-const string Goat::COLORS_FILENAME = "colors.txt";
-const string Goat::NAMES_FILENAME = "names.txt";
-const string Goat::names = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
+const string Goat::names[NUM_NAMES] = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
+const string Goat::colors[NUM_COLORS] = {"Chestnut", "Mahogany", "Cinnamon", "Fawn", "Slate", "Ivory", "Onyx", "Copper", "Ash", "Ebony", "Silver", "Cream", "Tawny", "Umber", "Pearl"};
 
 // Driver program
 int main() {
