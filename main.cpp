@@ -11,6 +11,50 @@ using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+class Goat {
+    public:
+        /**
+         * Initializes a goat with random age, color, and name
+         */
+        Goat() {
+            age = MIN_AGE + (rand() % (MAX_AGE - MIN_AGE + 1)); //Initialize with random age between MIN_AGE and MAX_AGE
+            name = names[rand() % NUM_NAMES];                   //Initialize name/color by retrieving a random element of their respective arrays
+            color = colors[rand() % NUM_COLORS];
+        }
+
+        /**
+         * Initializes goat with given age, name, and color
+         */
+        Goat(int age, string name, string color): age(age), color(color), name(name) { }
+
+        /**
+         * Output goat info formatted as [name] ([color], [age])
+         * @note Does not output newlines
+         */
+        void Print() const{
+            cout << name << " " << "(" << color << ", " << age << ")";
+        }
+
+        //Standard getters and setters
+        void setAge(int age)        { this->age = age; }
+        void setName(string name)   { this->name = name; }
+        void setColor(string color) { this->color = color; }
+        int getAge() const          { return age; }
+        string getName() const      { return name; }
+        string getColor() const     { return color; } 
+
+    private:
+        static const int NUM_COLORS = 15;
+        static const int NUM_NAMES = 15;
+        static const int MIN_AGE = 1;
+        static const int MAX_AGE = 20;
+        static const string names[NUM_NAMES];
+        static const string colors[NUM_COLORS];
+        int age;
+        string name;
+        string color;
+};
+
 class DoublyLinkedList {
 private:
     struct Node {
@@ -111,7 +155,6 @@ public:
     void print() {
         Node* current = head;
         if (!current) { cout << "List is empty " << endl; return; }
-        cout << "Forward: " << endl;
         while (current) {
             //Output goat using Goat::Print()
             cout << '\t';
@@ -125,7 +168,6 @@ public:
     void print_reverse() {
         Node* current = tail;
         if (!current) { cout << "List is empty " << endl; return; }
-        cout << "Backward: " << endl;
         while (current) {
             //Output goat using Goat::Print()
             cout << '\t';
@@ -145,67 +187,24 @@ public:
     }
 };
 
-class Goat {
-    public:
-        /**
-         * Initializes a goat with random age, color, and name
-         */
-        Goat() {
-            age = MIN_AGE + (rand() % (MAX_AGE - MIN_AGE + 1)); //Initialize with random age between MIN_AGE and MAX_AGE
-            name = names[rand() % NUM_NAMES];                   //Initialize name/color by retrieving a random element of their respective arrays
-            color = colors[rand() % NUM_COLORS];
-        }
-
-        /**
-         * Initializes goat with given age, name, and color
-         */
-        Goat(int age, string name, string color): age(age), color(color), name(name) { }
-
-        /**
-         * Output goat info formatted as [name] ([color], [age])
-         * @note Does not output newlines
-         */
-        void Print() const{
-            cout << name << " " << "(" << color << ", " << age << ")";
-        }
-
-        //Standard getters and setters
-        void setAge(int age)        { this->age = age; }
-        void setName(string name)   { this->name = name; }
-        void setColor(string color) { this->color = color; }
-        int getAge() const          { return age; }
-        string getName() const      { return name; }
-        string getColor() const     { return color; } 
-
-    private:
-        static const int NUM_COLORS = 15;
-        static const int NUM_NAMES = 15;
-        static const int MIN_AGE = 1;
-        static const int MAX_AGE = 20;
-        static const string names[NUM_NAMES];
-        static const string colors[NUM_COLORS];
-        int age;
-        string name;
-        string color;
-};
-
-
-void ValidateFile(fstream *input, string filename);
 
 const string Goat::names[NUM_NAMES] = {"Billy", "Nanny", "Gruff", "Daisy", "Clover", "Pepper", "Milo", "Hazel", "Willow", "Buck", "Luna", "Maple", "Oreo", "Mocha", "Finn"};
 const string Goat::colors[NUM_COLORS] = {"Chestnut", "Mahogany", "Cinnamon", "Fawn", "Slate", "Ivory", "Onyx", "Copper", "Ash", "Ebony", "Silver", "Cream", "Tawny", "Umber", "Pearl"};
 
 // Driver program
 int main() {
+    //Seed random number for goat ages, names, and colors
+    srand(time(0)); 
+
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
     for (int i = 0; i < size; ++i)
-        list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
-    cout << "List forward: ";
+        list.push_back(Goat());
+    cout << "List forward: " << endl;
     list.print();
 
-    cout << "List backward: ";
+    cout << "List backward: " << endl;
     list.print_reverse();
 
     cout << "Deleting list, then trying to print.\n";
@@ -214,17 +213,4 @@ int main() {
     list.print();
 
     return 0;
-}
-
-/**
- * Attempts to open a file, and throws an error if open operation failed
- * @param input File stream to open a file from
- * @param filename Name of the file to open
- */
-void ValidateFile(ifstream* input, string filename) {
-    input->open(filename);
-    if (!input->is_open()) {
-        cout << "ERROR: Could not open file \"" << filename << "\"" << endl;
-        throw ios_base::failure("Invalid file name");
-    }
 }
